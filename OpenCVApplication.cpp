@@ -1,11 +1,42 @@
 ﻿// OpenCVApplication.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
 //
 
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <fstream>
 #include <iostream>
+
+using namespace cv;
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    string filename = "title.png";
+
+    std::ifstream ifs(filename);
+    if (ifs.is_open())
+    {
+        cout << "ファイルは見つかりました" << endl;
+    }
+    else {
+        cout << "ファイルは見つかりません" << endl;
+    }
+
+
+    Mat image;
+    image = imread(filename, IMREAD_COLOR);
+    if (image.empty()) {
+        cout << "Could not open or find the image" << endl;
+        return -1;
+    }
+    namedWindow("Display window", WINDOW_AUTOSIZE);
+    imshow("Display window", image);
+
+    cout << "Hello World!\n";
+
+    waitKey(0);
+    return 0;
 }
 
 // プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
