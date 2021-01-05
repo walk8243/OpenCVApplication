@@ -10,9 +10,23 @@
 using namespace cv;
 using namespace std;
 
+bool starts_with(const string& s, const string& prefix)
+{
+    auto size = prefix.size();
+    if (s.size() < size) return false;
+    return equal(begin(prefix), end(prefix), begin(s));
+}
+
+bool check_option(const string& s, const string option_name)
+{
+    return starts_with(s, "--" + option_name + "=");
+}
+
 int main(int argc, char** argv)
 {
     bool debugFlag = false;
+    string refFilepath;
+    string targetFilepath;
     for (int i = 0; i < argc; i++)
     {
         string arg = argv[i];
@@ -20,10 +34,18 @@ int main(int argc, char** argv)
         {
             debugFlag = true;
         }
+        else if (check_option(arg, "ref"))
+        {
+            refFilepath = arg.substr(6);
+        }
+        else if (check_option(arg, "target"))
+        {
+            targetFilepath = arg.substr(9);
+        }
     }
 
     Mat refImage;
-    refImage = imread("F:\\git\\puzdra-auto-laps\\dungeon-title-cropping.png", IMREAD_UNCHANGED);
+    refImage = imread(refFilepath, IMREAD_UNCHANGED);
     if (refImage.empty()) {
         cout << "Could not open or find the image" << endl;
         return -1;
@@ -34,7 +56,7 @@ int main(int argc, char** argv)
     threshold(refMatGray, refMatThreshold, 0, 255, THRESH_BINARY | THRESH_OTSU);
 
     Mat targetImage;
-    targetImage = imread("F:\\git\\puzdra-auto-laps\\dungeon-title-cropping-2.png", IMREAD_UNCHANGED);
+    targetImage = imread(targetFilepath, IMREAD_UNCHANGED);
     if (targetImage.empty()) {
         cout << "Could not open or find the image" << endl;
         return -1;
