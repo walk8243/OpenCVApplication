@@ -33,6 +33,7 @@ int main(int argc, char** argv)
         if (arg == "-D")
         {
             debugFlag = true;
+            cout << "デバッグモードで実行します" << endl;
         }
         else if (check_option(arg, "ref"))
         {
@@ -43,11 +44,13 @@ int main(int argc, char** argv)
             targetFilepath = arg.substr(9);
         }
     }
+    cout << "ref   : " + refFilepath << endl;
+    cout << "target: " + targetFilepath << endl;
 
     Mat refImage;
     refImage = imread(refFilepath, IMREAD_UNCHANGED);
     if (refImage.empty()) {
-        cout << "Could not open or find the image" << endl;
+        cout << "画像ファイルを見つけられないか開けません" << endl;
         return -1;
     }
     Mat refMatGray;
@@ -58,7 +61,7 @@ int main(int argc, char** argv)
     Mat targetImage;
     targetImage = imread(targetFilepath, IMREAD_UNCHANGED);
     if (targetImage.empty()) {
-        cout << "Could not open or find the image" << endl;
+        cout << "画像ファイルを見つけられないか開けません" << endl;
         return -1;
     }
     Mat targetMatGray;
