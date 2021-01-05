@@ -10,8 +10,18 @@
 using namespace cv;
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
+    bool debugFlag = false;
+    for (int i = 0; i < argc; i++)
+    {
+        string arg = argv[i];
+        if (arg == "-D")
+        {
+            debugFlag = true;
+        }
+    }
+
     Mat refImage;
     refImage = imread("F:\\git\\puzdra-auto-laps\\dungeon-title-cropping.png", IMREAD_UNCHANGED);
     if (refImage.empty()) {
@@ -44,15 +54,19 @@ int main()
     vector<vector<Point>> vctContours;
     findContours(matDilate, vctContours, RETR_LIST, CHAIN_APPROX_NONE);
 
-    int i = 0;
-    for (auto contour = vctContours.begin(); contour != vctContours.end(); contour++) {
-        cv::drawContours(targetImage, vctContours, i, CV_RGB(0, 0, 255), 2);
-        i++;
-    }
+    if (debugFlag)
+    {
+        int i = 0;
+        for (auto contour = vctContours.begin(); contour != vctContours.end(); contour++) {
+            cv::drawContours(targetImage, vctContours, i, CV_RGB(0, 0, 255), 2);
+            i++;
+        }
 
-    imwrite("compare-result.jpg", targetImage);
-    imshow("diff", targetImage);
-    waitKey(0);
-    destroyAllWindows();
-    return 0;
+        imwrite("compare-result.jpg", targetImage);
+        imshow("diff", targetImage);
+        waitKey(0);
+        destroyAllWindows();
+    }
+    
+    return vctContours.size() == 0 ? 0 : 1;
 }
