@@ -1,0 +1,15 @@
+{
+  "name": "opencv-application",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "yarn run node-gyp build",
+    "rebuild": "yarn run node-gyp rebuild"
+  },
+  "repository": "https://github.com/walk8243/OpenCVApplication.git",
+  "author": "walk8243 <walk8243@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-gyp": "^7.1.2"
+  }
+}
