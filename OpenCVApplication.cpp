@@ -1,9 +1,8 @@
 ﻿#include <iostream>
+#include "func.h"
+#include "opencv.h"
 
 using namespace std;
-
-bool check_option(const string& s, const string option_name);
-bool isSameImage(const string refFilepath, const string targetFilepath, const bool debugFlag);
 
 int main(int argc, char** argv)
 {
